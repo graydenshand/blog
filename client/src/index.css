@@ -1,0 +1,28 @@
+
+#app {
+	font-family: "Helvetica", 'Arial', sans-serif;
+}
+#app p {
+	font-size: 16px;
+	line-height: 130% !important;
+}
+
+#app h2 {
+	font-weight: 600;
+}
+
+#navbar {
+	height: 50px;
+	padding: 1em;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+.ql-editor {
+  min-height: 150px;
+}
+
+.ql-toolbar, .ql-container{
+	border: none !important;
+	background-color: #fafafa;
+}
