@@ -1,19 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Post from './Post';
 
-const Feed = (props) => {
+class Feed extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+    };
+    this.loadPosts = this.loadPosts.bind(this);
+  }
 
-	return (
-	  <div>
-        {props.posts.map ( (post, index) =>
-          <Post 
-            header={post.header}
-            body={post.body}
-            key={index}
-          />
-        )}
-      </div>
-	);
+  loadPosts() {
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", "http://localhost:5000/v1/p/");
+    oReq.send();
+
+    oReq.onreadystatechange = () => {
+      if(oReq.readyState === XMLHttpRequest.DONE && oReq.status === 200) {
+          var posts = JSON.parse(oReq.responseText).result;
+          this.setState({'posts':posts});
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.loadPosts()
+  }
+
+	render() {
+    return (
+  	  <div>
+          {
+            this.state.posts.map ( (post, index) =>
+            <div>
+            <Post 
+              header={post.post_title}
+              body={post.post_body}
+              key={index}
+            />
+            </div>
+          )}
+        </div>
+	 )};
 }
+
+
 
 export default Feed;

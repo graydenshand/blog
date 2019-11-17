@@ -8,7 +8,7 @@ const Post = (props) => {
 			<div className="media">
 			  <div className="media-body">
 			    <h2 className="mt-0">{props.header}</h2>
-			    <p>{props.body}</p>
+			    <div dangerouslySetInnerHTML={{__html: props.body}}></div>
 			  </div>
 			</div>
 			<br />

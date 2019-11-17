@@ -9,6 +9,7 @@ import Navbar from './Navbar';
 import Post from './Post';
 import Feed from './Feed';
 import Editor from './Editor';
+import LoginForm from './LoginForm';
 
 class App extends Component {
 
@@ -24,24 +25,6 @@ class App extends Component {
       }
     ]
   };
-
-  constructor(props) {
-    super(props);
-    this.load_posts = this.load_posts.bind(this)
-    this.load_posts()
-  }
-
-  load_posts() {
-    function reqListener () {
-      //var state = JSON.parse(this.responseText).result;
-      //console.log(state);
-    }
-
-    var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", reqListener);
-    oReq.open("GET", "http://localhost:5000/v1/p/");
-    oReq.send();
-  }
   
   render() {
     return (
@@ -51,8 +34,8 @@ class App extends Component {
           <br />
           <div className='container'>
           <Switch>
-            <Route path="/about">
-              <About />
+            <Route path="/login">
+              <Login />
             </Route>
             <Route path="/p/:id">
               <P posts={this.state.posts} />
@@ -73,7 +56,7 @@ class App extends Component {
   }
 }
 
-
+// View Components
 function Home(props) {
   return (
     <div class="col-sm-6 offset-sm-3">
@@ -82,13 +65,17 @@ function Home(props) {
     )
 }
 
-function About() {
-  return <h2>About</h2>;
+function Login() {
+  return (
+    <div class='col-sm-6 offset-sm-3'>
+    <LoginForm />
+    </div>
+  );
 }
 
 function Edit() {
   return (
-    <div class='col-sm-7 offset-sm-3'>
+    <div class='col-sm-6 offset-sm-3'>
       <Editor />
     </div>
   );
