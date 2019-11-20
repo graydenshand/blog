@@ -29,18 +29,20 @@ class Feed extends Component {
 
 	render() {
     return (
-  	  <div>
-          {
-            this.state.posts.map ( (post, index) =>
-            <div>
-            <Post 
-              header={post.post_title}
-              body={post.post_body}
-              key={index}
-            />
-            </div>
-          )}
-        </div>
+      <div className='col-sm-6 offset-sm-3'>
+    	  <div>
+            {
+              this.state.posts.map ( (post, index) =>
+              <div>
+              <Post 
+                header={post.post_title}
+                body={post.post_body}
+                key={index}
+              />
+              </div>
+            )}
+          </div>
+      </div>
 	 )};
 }
 

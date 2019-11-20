@@ -137,10 +137,32 @@ class User():
 		secret_key = os.environ.get("SECRET_KEY")
 		return jwt.decode(bytes(token, 'utf-8'), secret_key)
 
+	def validate_token(self, token):
+		decoded = self.decode_token(token)
+		try:
+			if decoded['created_at'] >= time.time() - 3600*24*30: # 3600 seconds * 24 hours * 30 days
+				print(f"Validated token for user {decoded['user_id']}. Expires in {round(decoded['created_at'] + 3600*24*30 - time.time(), 0)} seconds.")
+				return True
+			else:
+				print("test")
+				return False
+		except Exception as e:
+			print(e)
+			return False
+
 	def validate_credentials(self, email, pw):
 		self.get_by_email(email)
 		_hash = self._hash_password(pw)
 		return _hash == self.password()
+
+	def json(self):
+		if len(self) == 0:
+			raise Exception("Empty User Instance")
+		elif len(self) == 1:
+			return json.dumps(self.data[0], default=str)
+		else:
+			raise Exception("Multiple users in object")
+
 
 if __name__ == '__main__':
 	pass

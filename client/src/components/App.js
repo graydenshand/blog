@@ -9,7 +9,9 @@ import Navbar from './Navbar';
 import Post from './Post';
 import Feed from './Feed';
 import Editor from './Editor';
-import LoginForm from './LoginForm';
+import Login from './Login';
+import Home from './Home'
+import P from './P';
 
 class App extends Component {
 
@@ -40,8 +42,11 @@ class App extends Component {
             <Route path="/p/:id">
               <P posts={this.state.posts} />
             </Route>
-            <Route path="/edit">
-              <Edit />
+            <Route path="/p">
+              <Feed />
+            </Route>
+            <Route path="/editor">
+              <Editor />
             </Route>
             <Route path="/">
               <Home 
@@ -54,43 +59,6 @@ class App extends Component {
       </Router>
     );
   }
-}
-
-// View Components
-function Home(props) {
-  return (
-    <div class="col-sm-6 offset-sm-3">
-      <Feed posts={props.posts} />
-    </div>
-    )
-}
-
-function Login() {
-  return (
-    <div class='col-sm-6 offset-sm-3'>
-    <LoginForm />
-    </div>
-  );
-}
-
-function Edit() {
-  return (
-    <div class='col-sm-6 offset-sm-3'>
-      <Editor />
-    </div>
-  );
-}
-
-function P(props) {
-  let { id } = useParams();
-  console.log(id);
-  let { posts } = props.posts;
-  console.log()
-  return (
-    <div class="col-sm-6 offset-sm-3">
-      <Post body={props.posts[id].body} header={props.posts[id].header} />
-    </div>
-  );
 }
 
 export default App;

@@ -17,6 +17,15 @@ def login():
 		u = User()
 		if u.validate_credentials(email, pw) == True:
 			token = u.generate_token()
-			return json.dumps({"result": {"token":token}})
+			user = {"f_name": u.f_name(), "l_name": u.l_name(), "email": u.email()}
+			return json.dumps({"result": {"token":token, "user": user}}, default=str)
 		else:
-			return json.dumps({"result": {"error":"error"}})
+			return json.dumps({"result": {"error":"Email or password not recognized"}})
+
+
+@auth.route("/validate_token", methods=["POST"])
+def validate_token():
+	token = request.form.get("token")
+	u = User()
+	response = {"result": u.validate_token(token)}
+	return json.dumps(response)

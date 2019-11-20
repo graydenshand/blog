@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
-
-
+import Auth from '../utilities/Auth';
+import Loading from './Loading';
 
 class Editor extends Component{
 
@@ -10,6 +10,7 @@ class Editor extends Component{
     super(props);
     this.state = {
       text: "",
+      ready: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -29,6 +30,8 @@ class Editor extends Component{
       'list', 'bullet', 'indent',
       'link', 'image'
     ]
+
+    this.login_redirect = this.login_redirect.bind(this);
   }
   
   handleChange(value){
@@ -40,17 +43,37 @@ class Editor extends Component{
     console.log(state);
   }
 
+  login_redirect(result) {
+    if (result != true) {
+      window.location.href = '/login?redirect=/editor'
+    } else {
+      this.setState({"ready": true})
+    }
+  } 
+
+  componentDidMount(){
+    var x = new Auth()
+    x.login_required(x.get_token(), this.login_redirect)
+  }
 
 
   render(){
-    return <div>
-      <ReactQuill value={this.state.text}
-        modules={this.modules}
-        formats={this.formats}
-        onChange={this.handleChange} />
-      <br />
-      <button className='btn' onClick={this.submit}>Publish</button>
-    </div>
+    if (this.state.ready == false) {
+      return <Loading />
+    } else {
+      return (
+      <div class='col-sm-6 offset-sm-3'>
+        <div>
+        <ReactQuill value={this.state.text}
+          modules={this.modules}
+          formats={this.formats}
+          onChange={this.handleChange} />
+        <br />
+        <button className='btn' onClick={this.submit}>Publish</button>
+        </div>
+      </div>
+      )
+    }
   }
 }
 
