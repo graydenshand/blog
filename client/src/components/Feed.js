@@ -35,9 +35,10 @@ class Feed extends Component {
               this.state.posts.map ( (post, index) =>
               <div>
               <Post 
+                id={post.post_id}
                 header={post.post_title}
                 body={post.post_body}
-                key={index}
+                key={post.post_id}
               />
               </div>
             )}

@@ -33,15 +33,13 @@ class Post():
 		return self.data
 
 	def get(self, post):
-		self.data = []
+		self.data = {}
 		db = Db()
 		sql = "SELECT * FROM posts WHERE post_id = %s;"
 		data = [post]
 		post = db.query(sql,data)
-		tmp_row = {}
 		for k, v in post.items():
-			tmp_row[k] = v
-		self.data.append(tmp_row)
+			self.data[k] = v
 		return self.data
 
 	def delete(self, post):

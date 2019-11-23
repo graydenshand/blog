@@ -7,6 +7,17 @@ class Loading extends Component {
 		this.state = {
 			data: ''
 		}
+		this.timeout = 'test';
+	}
+	
+	componentDidMount() {
+		this.timeout = setTimeout(() => {
+			alert("Error: request timeout")
+		}, 5000)
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.timeout);
 	}
 
 	render() {

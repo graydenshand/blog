@@ -11,6 +11,7 @@ class Editor extends Component{
     this.state = {
       text: "",
       ready: false,
+      posts: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -32,6 +33,7 @@ class Editor extends Component{
     ]
 
     this.login_redirect = this.login_redirect.bind(this);
+    this.loadPosts = this.loadPosts.bind(this);
   }
   
   handleChange(value){
@@ -51,9 +53,24 @@ class Editor extends Component{
     }
   } 
 
+  loadPosts() {
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", "http://localhost:5000/v1/p/");
+    //oReq.setRequestHeader('Access-Control-Allow-Origin', '*')
+    oReq.send();
+
+    oReq.onreadystatechange = () => {
+      if(oReq.readyState === XMLHttpRequest.DONE && oReq.status === 200) {
+          var posts = JSON.parse(oReq.responseText).result;
+          this.setState({'posts':posts});
+      }
+    }
+  }
+
   componentDidMount(){
     var x = new Auth()
     x.login_required(x.get_token(), this.login_redirect)
+    this.loadPosts()
   }
 
 
@@ -62,16 +79,26 @@ class Editor extends Component{
       return <Loading />
     } else {
       return (
-      <div class='col-sm-6 offset-sm-3'>
-        <div>
-        <ReactQuill value={this.state.text}
-          modules={this.modules}
-          formats={this.formats}
-          onChange={this.handleChange} />
-        <br />
-        <button className='btn' onClick={this.submit}>Publish</button>
+        <div className="row">
+          <div className="col-sm-3">
+            {this.state.posts.map((post, index) => 
+              <div>
+                <h5>{post.post_title}</h5>
+                <p>{post.post_created_at}</p>
+              </div>
+            )}
+          </div>
+          <div className='col-sm-6'>
+            <div>
+            <ReactQuill value={this.state.text}
+              modules={this.modules}
+              formats={this.formats}
+              onChange={this.handleChange} />
+            <br />
+            <button className='btn' onClick={this.submit}>Publish</button>
+            </div>
+          </div>
         </div>
-      </div>
       )
     }
   }

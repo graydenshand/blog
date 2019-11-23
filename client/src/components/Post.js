@@ -7,7 +7,7 @@ const Post = (props) => {
 		<div>
 			<div className="media">
 			  <div className="media-body">
-			    <h2 className="mt-0">{props.header}</h2>
+			    <h2 className="mt-0"><a href={`/p/${props.id}`}>{props.header}</a></h2>
 			    <div dangerouslySetInnerHTML={{__html: props.body}}></div>
 			  </div>
 			</div>

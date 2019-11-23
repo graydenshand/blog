@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.register_blueprint(posts)
 app.register_blueprint(auth)
 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 
 if __name__ == '__main__':
