@@ -15,18 +15,33 @@ import P from './P';
 
 class App extends Component {
 
-  state = {
-    posts: [
-      {
-        header: 'Post0',
-        body: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.'
-      },
-      {
-        header: 'Post1',
-        body: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.'
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: []
+    }
+    this.flashMessage = this.flashMessage.bind(this);
+    this.removeFlashedMessage = this.removeFlashedMessage.bind(this);
+  }
+
+  flashMessage(message) {
+    var current_messages = this.state.messages;
+    current_messages.push(message)
+    this.setState({messages: current_messages})
+    window.setTimeout(() => {
+      this.removeFlashedMessage(message)}, 1000)
+  }
+
+  removeFlashedMessage(message) {
+    var i;
+    var current_messages = this.state.messages;
+    for (i=0; i < this.state.messages.length; i++) {
+      if (this.state.messages[i] == message) {
+        current_messages.pop(i);
+        this.setState({messages: current_messages})
       }
-    ]
-  };
+    }
+  }
   
   render() {
     return (
@@ -34,6 +49,13 @@ class App extends Component {
         <div className="App" id="app">
           <Navbar />
           <br />
+          <div class='row'>
+            <div className='col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center' id='flashed-messages'>
+              {this.state.messages.map((message, index) => 
+                <div className="bg-info flashed-message">{message}</div>
+              )}
+            </div>
+          </div>
           <div className='container'>
           <Switch>
             <Route path="/login">
@@ -42,11 +64,10 @@ class App extends Component {
             <Route path="/p/:id">
               <P posts={this.state.posts} />
             </Route>
-            <Route path="/p">
-              <Feed />
-            </Route>
             <Route path="/editor">
-              <Editor />
+              <Editor 
+                flashMessage={this.flashMessage}
+              />
             </Route>
             <Route path="/">
               <Home 

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import Post from './Post';
+import Auth from '../utilities/Auth';
 
 class Feed extends Component {
+  /*
+  Component to render a stream of posts
+
+  */
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +18,9 @@ class Feed extends Component {
 
   loadPosts() {
     var oReq = new XMLHttpRequest();
-    oReq.open("GET", "http://localhost:5000/v1/p/");
+    var x = new Auth();
+    oReq.open("GET", "http://localhost:5000/v1/p/?publishedOnly=True");
+    oReq.setRequestHeader('X-Auth-Token', x.get_token())
     oReq.send();
 
     oReq.onreadystatechange = () => {
@@ -29,7 +37,7 @@ class Feed extends Component {
 
 	render() {
     return (
-      <div className='col-sm-6 offset-sm-3'>
+      <div className='col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
     	  <div>
             {
               this.state.posts.map ( (post, index) =>

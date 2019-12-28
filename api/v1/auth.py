@@ -27,5 +27,8 @@ def login():
 def validate_token():
 	token = request.form.get("token")
 	u = User()
-	response = {"result": u.validate_token(token)}
+	try:
+		response = {"result": u.validate_token(token)}
+	except:
+		response = {"result": False}
 	return json.dumps(response)

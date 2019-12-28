@@ -4,7 +4,7 @@ import React from 'react';
 const Navbar = (props) => {
 
 	return (
-		<div className='container-fluid' id='navbar'>
+		<div className='container' id='navbar'>
 			<div className="col-sm-6 offset-sm-3">
 				<p>Grayden's Blog</p>
 			</div>

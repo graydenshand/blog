@@ -2,6 +2,7 @@ import Post from './Post';
 import React from 'react';
 import {withRouter} from "react-router";
 import Loading from './Loading'
+import Auth from '../utilities/Auth';
 
 class P extends React.Component {
 	/* 
@@ -25,8 +26,10 @@ class P extends React.Component {
 	}
 
 	loadPost() {
-		var oReq = new XMLHttpRequest();
+	var oReq = new XMLHttpRequest();
+	var x = new Auth();
     oReq.open("GET", `http://localhost:5000/v1/p/${this.props.match.params.id}`);
+    oReq.setRequestHeader('X-Auth-Token', x.get_token())
     oReq.send();
 
     oReq.onreadystatechange = () => {

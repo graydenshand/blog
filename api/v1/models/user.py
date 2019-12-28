@@ -129,7 +129,7 @@ class User():
 
 	def generate_token(self):
 		secret_key = os.environ.get("SECRET_KEY")
-		payload = {"user_id": self.id(), "created_at": time.time()}
+		payload = {"user_id": self.id(), "created_at": time.time(), "role": self.role()}
 		encoded = jwt.encode(payload, secret_key, 'HS256')
 		return encoded.decode("utf-8")
 
@@ -145,6 +145,18 @@ class User():
 				return True
 			else:
 				print("test")
+				return False
+		except Exception as e:
+			print(e)
+			return False
+
+	def validate_and_decode_token(self, token):
+		decoded = self.decode_token(token)
+		try:
+			if decoded['created_at'] >= time.time() - 3600*24*30: # 3600 seconds * 24 hours * 30 days
+				print(f"Validated token for user {decoded['user_id']}. Expires in {round(decoded['created_at'] + 3600*24*30 - time.time(), 0)} seconds.")
+				return decoded
+			else:
 				return False
 		except Exception as e:
 			print(e)
