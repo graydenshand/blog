@@ -7,9 +7,6 @@
 	line-height: 130% !important;
 }
 
-body, html {
-	padding: 0;
-}
 
 #app h2 {
 	font-weight: 600;
@@ -27,32 +24,6 @@ body, html {
 
 #app a:hover {
 	text-decoration: underline;
-}
-
-#navbar {
-	height: 50px;
-	padding: 1em;
-	font-weight: 700;
-	letter-spacing: 1px;
-}
-
-.ql-editor {
-  min-height: 150px;
-}
-
-.ql-toolbar, .ql-container{
-	border: none !important;
-	background-color: #fafafa;
-}
-
-#title_input:focus {
-	border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;;
-}
-
-#title_input {
-	overflow-wrap: break-word;
 }
 
 .draft-card-published {
@@ -98,21 +69,12 @@ body, html {
   100% { transform: rotate(360deg); }
 }
 
-.ql-toolbar {
-	position: fixed;
-	z-index: 10;
-	margin-bottom: 10px;
-}
-
-.ql-editor {
-	padding-top: 40px;
-}
-
 #app .flashed-message {
 	border-radius:3px; 
 	box-shadow: 0px 2px 2px black;
-	color: #FFFFFF; 
 	font-weight: 600; 
+	color: black;
+	border: 1px solid #bbb;
 	padding: 5px;
 	position: absolute;
 	bottom: -5px;
@@ -123,7 +85,7 @@ body, html {
 }
 
 #app .post-body h1 {
-	font-size: 24pt;
+	font-size: 22pt;
 	margin-top: 1.5rem !important;
 	font-weight: 500;
 	color: #555;
@@ -137,31 +99,13 @@ body, html {
 }
 
 #app .post-body p {
-	font-size: 16pt;
+	font-size: 14pt;
 	font-weight: 300;
 	margin-top: .5em;
 	letter-spacing: -.05px !important;
-	line-height: 170% !important;
+	line-height: 130% !important;
 }
 
-#app .ql-container h1 {
-	font-size: 24pt;
-	margin-top: 1.5rem !important;
-	font-weight: 500;
-	color: #555;
-}
-
-#app .ql-container h2 {
-	font-size: 18pt;
-	font-weight: 400;
-	margin-top: .5em;
-	color: #333;
-}
-
-#app .ql-container p {
-	font-size: 16pt;
-	font-weight: 300;
-	margin-top: .5em;
-	letter-spacing: -0.5px !important;
-	line-height: 170% !important;
+#app .post-body img {
+	max-width: 100%;
 }

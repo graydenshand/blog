@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
-import Loading from './Loading';
 import Moment from "react-moment";
 import DraftCard from "./DraftCard";
 

@@ -1,0 +1,17 @@
+#navbar {
+	height: 50px;
+	padding: 1em;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+#navbar li {
+	font-weight: 300;
+}
+
+#navbar ul {
+	list-style: none;
+	margin: auto;
+	padding: 0;
+	width: 95%;
+}

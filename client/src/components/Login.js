@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Cookies from "js-cookie";
 import queryString from 'query-string';
+import Navbar from './Navbar/Navbar';
 
 class LoginForm extends Component {
 
@@ -49,20 +50,23 @@ class LoginForm extends Component {
 
 	render() {
 		return (
-		<div class='col-sm-6 offset-sm-3'>
-			<div>
-			<div id="error-container" class="col-8 offset-2" style={{fontWeight: 700}}></div>
-		      <form class="col-8 offset-2">
-		      	<div class="form-group">
-		       		<label>Email</label>
-		       		<input type="text" class="form-control" id="email"/>
-		        </div>
-		        <div class="form-group">
-		        	<label>Password</label>
-		        	<input type="password" class="form-control" id="pw" />
-		        </div>
-		        <button class="btn btn-primary" type="button" onClick={this.handleSubmit} >Submit</button>
-		      </form>
+		<div>
+			<Navbar display_nav={false}/>
+			<div class='col-sm-6 offset-sm-3'>
+				<div>
+				<div id="error-container" class="col-8 offset-2" style={{fontWeight: 700}}></div>
+			      <form class="col-8 offset-2">
+			      	<div class="form-group">
+			       		<label>Email</label>
+			       		<input type="text" class="form-control" id="email"/>
+			        </div>
+			        <div class="form-group">
+			        	<label>Password</label>
+			        	<input type="password" class="form-control" id="pw" />
+			        </div>
+			        <button class="btn btn-primary" type="button" onClick={this.handleSubmit} >Submit</button>
+			      </form>
+				</div>
 			</div>
 		</div>
 	);}

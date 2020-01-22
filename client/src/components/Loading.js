@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from './Navbar/Navbar';
 
 
 class Loading extends Component {
@@ -22,8 +23,11 @@ class Loading extends Component {
 
 	render() {
 		return (
-			<div className='row'>
-				<div className="loader offset-5"></div> 
+			<div>
+				<Navbar display_nav={false}/>
+				<div className='row'>
+					<div className="loader offset-5"></div> 
+				</div>
 			</div>
 		)
 	}

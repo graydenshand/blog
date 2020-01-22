@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 import {withRouter} from "react-router";
-import Auth from '../utilities/Auth';
-import Loading from './Loading';
-import DraftList from './DraftList'
+import Auth from '../../utilities/Auth';
+import Loading from '../Loading';
+import DraftList from './DraftList';
+import quill from 'quill';
+import Navbar from '../Navbar/Navbar';
+import './Editor.css';
 
 class Editor extends Component{
 
@@ -17,7 +20,7 @@ class Editor extends Component{
       posts: null, // array of posts from db
       selected: null, // selected post_id
       selectedIndex: null, // position of selected post in post array
-      new: true, // flag to control POST vs PUT requests
+      new: null, // flag to control POST vs PUT requests
       published: null, // flag to control publish vs unpublish button
     };
     this.handleBodyChange = this.handleBodyChange.bind(this);
@@ -26,16 +29,15 @@ class Editor extends Component{
     this.unPublish = this.unPublish.bind(this);
     this.modules = { toolbar: [
         [{ 'header': [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-        ['link', 'image'],
-        ['clean']
+        ['link', 'image']
       ],
     };
  
     this.formats = [
       'header',
-      'bold', 'italic', 'underline', 'strike', 'blockquote',
+      'bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block',
       'list', 'bullet', 'indent',
       'link', 'image'
     ]
@@ -50,7 +52,41 @@ class Editor extends Component{
   }
   
   handleBodyChange(value){
-    this.setState({text: value});
+    //console.log(value);
+    let re = /<img src="(data:image\/.+?;base64,(.*?))">/g;
+    var images = Array.from(value.matchAll(re))
+    images.forEach((match, index) => {
+      if (this.state.new) {
+        this.createPost();
+      }
+      // save image to S3, return public link, update src attribute
+      var base64 = match[2]
+      var oldSrc = match[1]
+      var r = new XMLHttpRequest();
+      var x = new Auth();
+      r.open("POST", "http://localhost:5000/v1/i/");
+      r.setRequestHeader('X-Auth-Token', x.get_token())
+      r.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+      r.responseType = 'json';
+      var params = `post_id=${this.state.selected}&payload=${base64}`
+      r.send(params);
+      console.log('send')
+      r.onreadystatechange = () => {
+        if(r.readyState === XMLHttpRequest.DONE && r.status === 200) {
+          //console.log(r.responseText)
+          if (r.response != null) {
+            var result = r.response.result;
+            value = value.replace(oldSrc, result) // replace stock photo with s3 link
+            this.setState({text: value});
+          }
+        }
+      }
+    });
+    this.setState({text: value})
+  }
+
+  uploadImage(base64) {
+
   }
 
   handleTitleChange(event) {
@@ -82,7 +118,7 @@ class Editor extends Component{
         posts = posts.filter(function(post) {
           return post.post_id != id_to_delete;
         })
-        this.setState({posts:posts, text:'', title:"Untitled", new:true})
+        this.setState({posts:posts, text:'', title:"Untitled", new:null})
       } 
     }
   }
@@ -106,7 +142,7 @@ class Editor extends Component{
       if(r.readyState === XMLHttpRequest.DONE && r.status === 200) {
         var post = JSON.parse(r.responseText).result
         posts.unshift(post); // insert at index 0
-        this.setState({"posts": posts, "selected": post.post_id, "selectedIndex": 0})
+        this.setState({"posts": posts, "selected": post.post_id, "selectedIndex": 0, new: false})
       }
     }
   }
@@ -139,12 +175,11 @@ class Editor extends Component{
     if (this.state.new) {
       //console.log("Post request: new post");
       this.createPost()
-      this.setState({'new': false});
     } else {
       //console.log("Put request: existing post")
       this.updatePost()
-      this.props.flashMessage("Post saved")
     }
+    this.props.flashMessage("Post saved")
   }
 
   publish(value){ // save and publish post
@@ -213,13 +248,13 @@ class Editor extends Component{
   }
 
   newPost() {
-    this.setState({selected:null, text:"", title: "", new:true})  
+    this.setState({selected:null, text:"", title: "", new:true, published:false}, this.createPost)  
   }
 
   componentDidMount(){
     var x = new Auth()
     x.login_required(x.get_token(), this.login_redirect)
-    var posts = this.loadPosts()      
+    var posts = this.loadPosts()   
   }
 
 
@@ -228,27 +263,36 @@ class Editor extends Component{
       return <Loading />
     } else {
       return (
-        <div className="row">
-          <div className="col-sm-3">
-            <DraftList posts={this.state.posts} selected={this.state.selected} select={this.handleChangeSelected}/>
-          </div>
-          <div className='col-sm-6'>
-              <div>
-                <textarea id="title_input" value={this.state.title} onChange={this.handleTitleChange} className="form-control" rows="1" placeholder="Untitled" style={{border: "none", fontSize: 32, marginBottom: 5, lineHeight: "100%"}}/>
-              </div>
-              <div>
-              <ReactQuill value={this.state.text}
-                modules={this.modules}
-                formats={this.formats}
-                onChange={this.handleBodyChange} />
-              <br />
-              </div>
+        <div>
+          <Navbar display_nav={false}/>
+          <br />
+          <div className="row">
+            <div className="col-sm-3">
+              <DraftList posts={this.state.posts} selected={this.state.selected} select={this.handleChangeSelected}/>
             </div>
-          <div className="col-sm-3">
-                <button className='btn btn-primary' onClick={this.save} style={{width: "100%", marginBottom: "1em", marginTop: '3em'}}>Save Draft</button>
-                <button className='btn btn-warning' onClick={this.state.published ? this.unPublish : this.publish} style={{width: "100%", marginBottom: "1em"}}>{this.state.published ? "Unpublish" : "Publish"}</button>
-                <button className='btn btn-danger' onClick={this.deletePost} style={{width: "100%", marginBottom: "1em"}}>Delete</button>
-                <button className='btn btn-success' onClick={this.newPost} style={{width: "100%", marginBottom: "1em"}}>New</button>
+            <div className='col-sm-6'>
+              {this.state.new != null ?
+              <div>
+                <div>
+                  <textarea id="title_input" value={this.state.title} onChange={this.handleTitleChange} className="form-control" rows="1" placeholder="Untitled" style={{border: "none", fontSize: 32, marginBottom: 5, lineHeight: "100%"}}/>
+                </div>
+                  
+                <div> 
+                  <ReactQuill value={this.state.text}
+                    modules={this.modules}
+                    formats={this.formats}
+                    onChange={this.handleBodyChange} />
+                  <br /> 
+                  </div>
+                </div>
+                : <div className="text-center align-middle" style={{height: "300px", marginTop: "3em"}}><p className="lead">Click a post or select "New" to start editing</p></div>}
+              </div>
+            <div className="col-sm-3">
+                  <button className='btn btn-primary' onClick={this.save} style={{width: "100%", marginBottom: "1em", marginTop: '3em'}}>Save Draft</button>
+                  <button className='btn btn-warning' onClick={this.state.published ? this.unPublish : this.publish} style={{width: "100%", marginBottom: "1em"}}>{this.state.published ? "Unpublish" : "Publish"}</button>
+                  <button className='btn btn-danger' onClick={this.deletePost} style={{width: "100%", marginBottom: "1em"}}>Delete</button>
+                  <button className='btn btn-success' onClick={this.newPost} style={{width: "100%", marginBottom: "1em"}}>New</button>
+            </div>
           </div>
         </div>
       )

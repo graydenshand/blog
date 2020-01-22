@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Post from './Post';
 import Auth from '../utilities/Auth';
+import Navbar from './Navbar/Navbar'
 
 class Feed extends Component {
   /*
@@ -31,26 +32,27 @@ class Feed extends Component {
     }
   }
 
-  componentDidMount() {
-    this.loadPosts()
-  }
-
 	render() {
     return (
-      <div className='col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
-    	  <div>
-            {
-              this.state.posts.map ( (post, index) =>
-              <div>
-              <Post 
-                id={post.post_id}
-                header={post.post_title}
-                body={post.post_body}
-                key={post.post_id}
-              />
-              </div>
-            )}
-          </div>
+      <div>
+        <Navbar />
+        <br />
+        <div className='col-xs-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3'>
+      	  <div>
+              {
+                this.props.posts.map ( (post, index) =>
+                <div>
+                <Post 
+                  post_id={post.post_id}
+                  post_title={post.post_title}
+                  post_body={post.post_body}
+                  post_created_at={post.post_created_at}
+                  key={post.post_id}
+                />
+                </div>
+              )}
+            </div>
+        </div>
       </div>
 	 )};
 }

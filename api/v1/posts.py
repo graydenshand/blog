@@ -85,6 +85,7 @@ def p(post=None):
 			formdata = {}
 			for k, v in request.form.items():
 				formdata[k] = v
+			print(formdata)
 			if 'post_published' in formdata.keys():
 				formdata['post_published_at'] = datetime.now()
 			user_id = user['user_id']
