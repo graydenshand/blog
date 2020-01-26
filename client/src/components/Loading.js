@@ -24,7 +24,6 @@ class Loading extends Component {
 	render() {
 		return (
 			<div>
-				<Navbar display_nav={false}/>
 				<div className='row'>
 					<div className="loader offset-5"></div> 
 				</div>

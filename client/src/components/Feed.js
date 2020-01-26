@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Post from './Post';
+import Post from './Post/Post';
 import Auth from '../utilities/Auth';
 import Navbar from './Navbar/Navbar'
 
@@ -43,10 +43,8 @@ class Feed extends Component {
                 this.props.posts.map ( (post, index) =>
                 <div>
                 <Post 
-                  post_id={post.post_id}
-                  post_title={post.post_title}
-                  post_body={post.post_body}
-                  post_created_at={post.post_created_at}
+                  posts={this.props.posts}
+                  post={post}
                   key={post.post_id}
                 />
                 </div>

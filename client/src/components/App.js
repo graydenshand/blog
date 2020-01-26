@@ -6,11 +6,12 @@ import {
   useParams
 } from "react-router-dom";
 import Navbar from './Navbar/Navbar';
-import Post from './Post';
+import Post from './Post/Post';
 import Feed from './Feed';
 import Editor from './Editor/Editor';
 import Login from './Login';
 import Auth from '../utilities/Auth';
+import PostContainer from'./Post/PostContainer';
 
 class App extends Component {
 
@@ -80,18 +81,9 @@ class App extends Component {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/p/:id">
-              <div>
-                <Navbar />
-                <br />
-                <div className="col-sm-6 offset-sm-3">
-                  <Post 
-                    posts={this.state.posts}
-                    test="test!"
-                  />
-                </div>
-              </div>
-            </Route>
+            <Route path="/p/:id" children={
+              <PostContainer posts={this.state.posts} />
+            } />
             <Route path="/editor">
               <Editor 
                 flashMessage={this.flashMessage}

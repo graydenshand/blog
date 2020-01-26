@@ -7,6 +7,7 @@ import Loading from '../Loading';
 import DraftList from './DraftList';
 import quill from 'quill';
 import Navbar from '../Navbar/Navbar';
+import EditorControls from'./EditorControls';
 import './Editor.css';
 
 class Editor extends Component{
@@ -285,13 +286,17 @@ class Editor extends Component{
                   <br /> 
                   </div>
                 </div>
-                : <div className="text-center align-middle" style={{height: "300px", marginTop: "3em"}}><p className="lead">Click a post or select "New" to start editing</p></div>}
+                : <div className="text-center align-middle" style={{height: "300px", marginTop: "3em"}}><p className="lead">Select a post or click <a onClick={this.newPost} style={{textDecoration: "underline", cursor: "pointer"}}>New</a> to start editing</p></div>}
               </div>
             <div className="col-sm-3">
-                  <button className='btn btn-primary' onClick={this.save} style={{width: "100%", marginBottom: "1em", marginTop: '3em'}}>Save Draft</button>
-                  <button className='btn btn-warning' onClick={this.state.published ? this.unPublish : this.publish} style={{width: "100%", marginBottom: "1em"}}>{this.state.published ? "Unpublish" : "Publish"}</button>
-                  <button className='btn btn-danger' onClick={this.deletePost} style={{width: "100%", marginBottom: "1em"}}>Delete</button>
-                  <button className='btn btn-success' onClick={this.newPost} style={{width: "100%", marginBottom: "1em"}}>New</button>
+                  <EditorControls 
+                    published={this.state.published} 
+                    publish={this.publish}
+                    unPublish={this.unPublish}
+                    save={this.save}
+                    newPost={this.newPost}
+                    deletePost={this.deletePost}
+                  />
             </div>
           </div>
         </div>

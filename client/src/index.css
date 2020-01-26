@@ -26,29 +26,6 @@
 	text-decoration: underline;
 }
 
-.draft-card-published {
-	background-color: #fff !important;
-}
-
-.draft-card {
-	border: 1px solid #ccc;
-	padding: .5em;
-	background-color: #eee; 
-}
-
-
-.draft-card-selected {
-	background-color: #111;
-	color: white;
-}
-
-.draft-card-selected .text-muted {
-	color: #ddd !important;
-}
-
-#app .draft-card-link:hover {
-	text-decoration: none;
-}
 
 #app .btn {
 	border-radius: 0;
@@ -71,41 +48,16 @@
 
 #app .flashed-message {
 	border-radius:3px; 
+	background-color: #FFF;
 	box-shadow: 0px 2px 2px black;
 	font-weight: 600; 
 	color: black;
 	border: 1px solid #bbb;
 	padding: 5px;
 	position: absolute;
-	bottom: -5px;
+	top: 38px;
 	left: 10%;
 	width: 80%;
 	z-index: 100;
-	opacity: .8;
 }
 
-#app .post-body h1 {
-	font-size: 22pt;
-	margin-top: 1.5rem !important;
-	font-weight: 500;
-	color: #555;
-}
-
-#app .post-body h2 {
-	font-size: 18pt;
-	font-weight: 400;
-	margin-top: .5em;
-	color: #333;
-}
-
-#app .post-body p {
-	font-size: 14pt;
-	font-weight: 300;
-	margin-top: .5em;
-	letter-spacing: -.05px !important;
-	line-height: 130% !important;
-}
-
-#app .post-body img {
-	max-width: 100%;
-}

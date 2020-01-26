@@ -40,3 +40,83 @@
 #title_input {
 	overflow-wrap: break-word;
 }
+
+.draft-card-published {
+	background-color: #fff !important;
+}
+
+.draft-card {
+	border: 1px solid #ccc;
+	padding: .5em;
+	background-color: #eee; 
+}
+
+.draft-card-selected {
+	background-color: #111;
+	color: white;
+}
+
+.draft-card-selected .text-muted {
+	color: #ddd !important;
+}
+
+#app .draft-card-link:hover {
+	text-decoration: none;
+}
+
+#app .editor-controls {
+	display: flex;
+	flex-direction: column;
+	height: 500px;
+}
+
+#app .editor-controls a {
+	display: inline-block;
+	margin-bottom: 1em;
+	max-width: 40%;
+}
+
+#app .control {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	margin-bottom: 1em;
+}
+
+#app .control:hover:after {
+	margin-left: 5px;
+	display: inline-block;
+	background-color:black;
+	color: white;
+	padding: 0 5px;
+	border-radius: 2px;
+}
+
+#app .save-control:hover:after {
+	content: 'Save';
+}
+
+#app .delete-control:hover:after {
+	content: 'Delete';
+}
+
+#app .publish-control:hover:after {
+	content: 'Make public';
+}
+
+#app .unpublish-control:hover:after {
+	content: 'Make private';
+}
+
+#app .new-control:hover:after {
+	content: 'New';
+}
+
+#app .control-icon {
+	padding: 10px;
+	border: 1px solid #444;
+	border-radius: 4px;
+}
+
+
+

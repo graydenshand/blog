@@ -1,0 +1,29 @@
+#app .post-body h1 {
+	font-size: 22pt;
+	margin-top: 1.5rem !important;
+	font-weight: 500;
+	color: #555;
+}
+
+#app .post-body h2 {
+	font-size: 18pt;
+	font-weight: 400;
+	margin-top: .5em;
+	color: #333;
+}
+
+#app .post-body p {
+	font-size: 14pt;
+	font-weight: 300;
+	margin-top: .5em;
+	letter-spacing: -.05px !important;
+	line-height: 130% !important;
+}
+
+#app .post-title {
+	font-size: 18pt;
+}
+
+#app .post-body img {
+	max-width: 100%;
+}
