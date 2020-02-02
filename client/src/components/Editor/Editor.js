@@ -119,7 +119,7 @@ class Editor extends Component{
         posts = posts.filter(function(post) {
           return post.post_id != id_to_delete;
         })
-        this.setState({posts:posts, text:'', title:"Untitled", new:null})
+        this.setState({posts:posts, text:'', title:"", new:null})
       } 
     }
   }
@@ -290,6 +290,7 @@ class Editor extends Component{
               </div>
             <div className="col-sm-3">
                   <EditorControls 
+                    new={this.state.new}
                     published={this.state.published} 
                     publish={this.publish}
                     unPublish={this.unPublish}
