@@ -1,21 +1,34 @@
 FROM ubuntu:18.04
+MAINTAINER Grayden Shand graydenshand@gmail.com
 
+# Install python
+# --------------
 RUN apt-get update -y && \
-    apt-get install -y python3-venv python3-pip python3-dev
+    apt-get install -y python3-venv \
+    python3-pip \
+    python3-dev \
+    locales locales-all
 
+# Set up Env
+# ----------
+## Set the locale
+ENV LC_ALL=en_US.UTF-8
+ENV LANGUAGE en_US:en 
+ENV LANG=en_US.UTF-8
+
+## Copy and mount app
+RUN mkdir /home/api
 WORKDIR /home/api
+COPY requirements.txt /home/api/requirements.txt
+RUN python3 -m pip install -r requirements.txt
+VOLUME /home/api/
+COPY . /home/api/
 
-COPY . .
+## Set ENVs required by app
+ENV FLASK_APP=main.py
+ENV FLASK_ENV=development
 
-RUN python3 -m venv venv
-RUN venv/bin/pip install -r requirements.txt
-
-RUN chmod +x boot.sh
-
-ENV FLASK_APP main.py
-
-EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
-
-
-
+# Run app
+# -------
+ENTRYPOINT ["flask"]
+CMD ["run"]
