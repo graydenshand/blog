@@ -1,0 +1,9 @@
+docker run -it -v blog_data:/var/lib/postgresql/data --rm -p 5432:5432 blog_db:development
+
+docker build . -t blog_db:development
+
+# Build schema
+psql -h localhost -p 5432 -U postgres -f build_schema.sql
+
+# Connect to db
+psql -h localhost -p 5432 -U postgres -d blog

@@ -1,3 +1,6 @@
+CREATE DATABASE blog;
+
+\c blog
 
 CREATE TABLE IF NOT EXISTS Users  (
 	user_id SERIAL PRIMARY KEY,

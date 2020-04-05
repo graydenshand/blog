@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  db:
+    image: blog_db:development
+    volumes:
+      - blog_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    restart: always
+    
+  api:
+    image: blog_api:development
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    restart: always
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  blog_data:

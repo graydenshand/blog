@@ -30,5 +30,5 @@ ENV FLASK_ENV=development
 
 # Run app
 # -------
-ENTRYPOINT ["flask"]
-CMD ["run"]
+ENTRYPOINT ["python3"]
+CMD ["main.py"]
