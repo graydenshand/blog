@@ -10,7 +10,7 @@ app.register_blueprint(posts)
 app.register_blueprint(auth)
 app.register_blueprint(images)
 
-cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+cors = CORS(app)
 
 
 if __name__ == '__main__':

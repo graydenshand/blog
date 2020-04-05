@@ -11,7 +11,7 @@ class Auth {
 
 	login_required(token, callback) {
 		var r = new XMLHttpRequest();
-	    r.open("POST", "http://localhost:5000/v1/validate_token");
+	    r.open("POST", "http://127.0.0.1:5000/v1/validate_token");
 	    let params = `token=${token}`
 	    r.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
 	    r.send(params);

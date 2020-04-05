@@ -5,26 +5,29 @@ services:
     image: blog_db:development
     volumes:
       - blog_data:/var/lib/postgresql/data
-    networks:
-      - backend
     ports:
       - 5432:5432
     restart: always
     
   api:
     image: blog_api:development
-    networks:
-      - backend
-      - frontend
+    volumes:
+      - "./api/:/home/api/"
     ports:
       - 5000:5000
     depends_on:
       - db
     restart: always
 
-networks:
-  frontend:
-  backend:
+  client:
+    image: blog_client:development
+    volumes:
+      - "./client/:/home/client/"
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    restart: always
 
 volumes:
   blog_data:

@@ -48,7 +48,7 @@ class App extends Component {
   loadPosts() {
     var oReq = new XMLHttpRequest();
     var x = new Auth();
-    oReq.open("GET", "http://localhost:5000/v1/p/?publishedOnly=True");
+    oReq.open("GET", "http://127.0.0.1:5000/v1/p/?publishedOnly=True");
     oReq.setRequestHeader('X-Auth-Token', x.get_token())
     oReq.send();
 

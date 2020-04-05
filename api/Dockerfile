@@ -27,6 +27,9 @@ COPY . /home/api/
 ## Set ENVs required by app
 ENV FLASK_APP=main.py
 ENV FLASK_ENV=development
+ENV DATABASE_URL=postgres://postgres:example@db:5432/blog
+ENV SECRET_KEY='12345'
+
 
 # Run app
 # -------

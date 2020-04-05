@@ -1,0 +1,7 @@
+docker run -it --rm \
+ -v $PWD:/home/client/:rw \
+ -p 3000:3000 \
+blog_client:development
+
+
+docker build . -t blog_client:development

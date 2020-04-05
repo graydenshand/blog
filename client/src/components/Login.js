@@ -23,7 +23,7 @@ class LoginForm extends Component {
 		let email = document.querySelector('#email').value;
 		let pw = document.querySelector('#pw').value;
 		var r = new XMLHttpRequest();
-	    r.open("POST", "http://localhost:5000/v1/login");
+	    r.open("POST", "http://127.0.0.1:5000/v1/login");
 	    let params = `email=${email}&pw=${pw}`
 	    r.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
 	    r.send(params);
