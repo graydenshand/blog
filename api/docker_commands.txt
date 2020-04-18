@@ -5,4 +5,16 @@ docker run -it --rm \
 blog_api:development
 
 # Build development container
-docker build . -t blog_api:development
+docker build ./Dockerfile.production -t blog_api:development
+
+
+
+
+## Run flask app in production mode, PWD must be this folder (/blog/api/)
+docker run -it --rm \
+ -v $PWD:/home/api/:rw \
+ -p 5000:5000 \
+blog_api:production
+
+# Build production container
+docker build ./Dockerfile.production -t blog_api:production

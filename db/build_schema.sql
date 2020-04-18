@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS Users  (
 	user_l_name TEXT,
 	user_created_at TIMESTAMP,
 	user_password TEXT,
-	user_email TEXT,
-	user_subscribed BOOLEAN,
+	user_email TEXT UNIQUE NOT NULL,
+	user_subscribed BOOLEAN DEFAULT FALSE,
 	user_role TEXT
 );
 

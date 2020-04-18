@@ -1,0 +1,34 @@
+FROM ubuntu:18.04
+MAINTAINER Grayden Shand graydenshand@gmail.com
+
+# Install python
+# --------------
+RUN apt-get update -y && \
+    apt-get install -y python3-venv \
+    python3-pip \
+    python3-dev \
+    locales locales-all
+
+# Set up Env
+# ----------
+## Set the locale
+ENV LC_ALL=en_US.UTF-8
+ENV LANGUAGE en_US:en 
+ENV LANG=en_US.UTF-8
+
+## Copy app
+RUN mkdir /home/api
+WORKDIR /home/api
+COPY requirements.txt /home/api/requirements.txt
+RUN python3 -m pip install -r requirements.txt
+COPY . /home/api/
+
+## Set ENVs required by app
+ENV DATABASE_URL=${DATABASE_URL}
+ENV SECRET_KEY=${SECRET_KEY}
+
+
+# Run app
+# -------
+ENTRYPOINT ["gunicorn"]
+CMD ["--workers=2", "--bind=0.0.0.0:5000", "main:app"]

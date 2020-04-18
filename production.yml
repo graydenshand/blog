@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile.production
+    image: blog_api:production
+    ports:
+      - 5000:5000
+    restart: always
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.production
+    image: blog_client:production
+    ports: 
+      - 1234:80
+    depends_on:
+      - api
+    restart: always
+
+volumes:
+  blog_data:
