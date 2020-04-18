@@ -23,10 +23,6 @@ COPY requirements.txt /home/api/requirements.txt
 RUN python3 -m pip install -r requirements.txt
 COPY . /home/api/
 
-## Set ENVs required by app
-ENV DATABASE_URL=${DATABASE_URL}
-ENV SECRET_KEY=${SECRET_KEY}
-
 
 # Run app
 # -------
