@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile.production
     image: blog_client:production
     ports: 
-      - 1234:80
+      - 80:80
     depends_on:
       - api
     restart: always
