@@ -65,7 +65,7 @@ class Editor extends Component{
       var oldSrc = match[1]
       var r = new XMLHttpRequest();
       var x = new Auth();
-      r.open("POST", "http://127.0.0.1:5000/v1/i/");
+      r.open("POST", `http://${window.location.host}:5000/v1/i/`);
       r.setRequestHeader('X-Auth-Token', x.get_token())
       r.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
       r.responseType = 'json';
@@ -109,7 +109,7 @@ class Editor extends Component{
   deletePost() {
     var r = new XMLHttpRequest();
     var x = new Auth();
-    r.open("DELETE", `http://127.0.0.1:5000/v1/p/${this.state.selected}`);
+    r.open("DELETE", `http://${window.location.host}:5000/v1/p/${this.state.selected}`);
     r.setRequestHeader('X-Auth-Token', x.get_token())
     r.send();
     var id_to_delete = this.state.selected
@@ -127,7 +127,7 @@ class Editor extends Component{
   createPost() {
     var r = new XMLHttpRequest();
     var x = new Auth();
-    r.open("POST", "http://127.0.0.1:5000/v1/p/");
+    r.open("POST", `http://${window.location.host}:5000/v1/p/`);
     r.setRequestHeader('X-Auth-Token', x.get_token())
     r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (this.state.title == "") {
@@ -151,7 +151,7 @@ class Editor extends Component{
   updatePost() {
     var r = new XMLHttpRequest();
     var x = new Auth();
-    r.open("PUT", `http://127.0.0.1:5000/v1/p/${this.state.selected}`);
+    r.open("PUT", `http://${window.location.host}:5000/v1/p/${this.state.selected}`);
     r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     r.setRequestHeader('X-Auth-Token', x.get_token())
     if (this.state.title == "") {
@@ -187,7 +187,7 @@ class Editor extends Component{
     this.save(); // because it could be a new post
     var r = new XMLHttpRequest();
     var x = new Auth();
-    r.open("PUT", `http://127.0.0.1:5000/v1/p/${this.state.selected}`);
+    r.open("PUT", `http://${window.location.host}:5000/v1/p/${this.state.selected}`);
     r.setRequestHeader('X-Auth-Token', x.get_token())
     r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     var params = `post_published=true`
@@ -208,7 +208,7 @@ class Editor extends Component{
   // un-publish a post and hide it from public view
     var r = new XMLHttpRequest();
     var x = new Auth();
-    r.open("PUT", `http://127.0.0.1:5000/v1/p/${this.state.selected}`);
+    r.open("PUT", `http://${window.location.host}:5000/v1/p/${this.state.selected}`);
     r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     r.setRequestHeader('X-Auth-Token', x.get_token())
     var params = `post_published=false`
@@ -235,7 +235,7 @@ class Editor extends Component{
   loadPosts() {
     var oReq = new XMLHttpRequest();
     var x = new Auth();
-    oReq.open("GET", "http://127.0.0.1:5000/v1/p/");
+    oReq.open("GET", `http://${window.location.host}:5000/v1/p/`);
     oReq.setRequestHeader('X-Auth-Token', x.get_token())
     oReq.send();
 
