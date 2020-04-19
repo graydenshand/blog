@@ -1,13 +1,13 @@
 FROM node:13
 MAINTAINER Grayden Shand graydenshand@gmail.com
 
-RUN npm install react
-RUN npm install react-scripts@3.4.1 -g --silent
-
 ## Copy and mount app
 RUN mkdir /home/client
 WORKDIR /home/client
 COPY . /home/client/
+
+RUN npm install react
+RUN npm install react-scripts@3.4.1 -g --silent
 
 RUN npm run build
 
