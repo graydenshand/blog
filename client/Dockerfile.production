@@ -8,7 +8,7 @@ RUN mkdir /home/client
 WORKDIR /home/client
 COPY . /home/client/
 
-buildRUN npm run build
+RUN npm run build
 
 
 # nginx server
